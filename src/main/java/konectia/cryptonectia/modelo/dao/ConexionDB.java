@@ -24,9 +24,15 @@ public class ConexionDB {
 
     // Método que cualquier DAO llamará cuando necesite una conexión.
     public static Connection conectar() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException(
+                    "No se encontró el driver de MySQL",
+                    e
+            );
+        }
 
-        // DriverManager usa la URL, usuario y contraseña.
-        // Si todo es correcto, devuelve una Connection abierta.
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
