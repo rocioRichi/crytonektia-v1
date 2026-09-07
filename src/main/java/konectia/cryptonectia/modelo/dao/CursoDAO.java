@@ -105,4 +105,38 @@ public class CursoDAO {
 
         return cursos;
     }
+
+    public int insertar(Curso curso) {
+
+        // No incluimos id porque MySQL lo genera con AUTO_INCREMENT.
+        // Los interrogantes reservan el lugar de los valores.
+        String sql = """
+            INSERT INTO curso (nombre, horas, activo)
+            VALUES (?, ?, ?)
+            """;
+
+        // Solo abrimos Connection y PreparedStatement.
+        // INSERT no devuelve filas, por eso no necesita ResultSet.
+        try (
+                Connection conexion = ConexionDB.conectar();
+                PreparedStatement sentencia = conexion.prepareStatement(sql)
+        ) {
+            // El primer interrogante recibe el nombre.
+            sentencia.setString(1, curso.getNombre());
+
+            // El segundo recibe las horas.
+            sentencia.setInt(2, curso.getHoras());
+
+            // El tercero recibe true o false.
+            sentencia.setBoolean(3, curso.isActivo());
+
+            // Ejecuta el INSERT y devuelve el número de filas insertadas.
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "No se pudo insertar el curso", e
+            );
+        }
+    }
 }
