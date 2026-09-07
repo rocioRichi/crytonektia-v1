@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos activos</title>
+</head>
+<body>
+
+<h1>Cursos activos</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Horas</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {{#cursos}}
+    <tr>
+        <td>{{nombre}}</td>
+        <td>{{horas}}</td>
+    </tr>
+    {{/cursos}}
+
+    {{^cursos}}
+    <tr>
+        <td colspan="2">No hay cursos activos.</td>
+    </tr>
+    {{/cursos}}
+    </tbody>
+</table>
+
+</body>
+</html>
